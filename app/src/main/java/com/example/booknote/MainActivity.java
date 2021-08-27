@@ -5,14 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+
 
 import com.example.booknote.db.DbManager;
 
 public class MainActivity extends AppCompatActivity {
     private DbManager dbManager;
     private EditText edTitle, edDesc;
-    private TextView txtView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         dbManager = new DbManager(this);
         edTitle = findViewById(R.id.edTitle);
         edDesc = findViewById(R.id.edDesc);
-        txtView = findViewById(R.id.txtView);
     }
 
     @Override
@@ -31,12 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickSave(View view) {
-        txtView.setText("");
         dbManager.insertToDb(edTitle.getText().toString(), edDesc.getText().toString());
-        for(String title : dbManager.selectFromDb()){
-            txtView.append(title);
-            txtView.append("\n");
-        }
     }
 
     @Override

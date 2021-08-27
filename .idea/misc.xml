@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Alex/AndroidStudioProjects/Booknote/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/Alex/AndroidStudioProjects/Booknote/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/Alex/AndroidStudioProjects/Booknote/app/src/main/res/layout/activity_edit.xml" value="0.25" />
+        <entry key="..\:/Users/Alex/AndroidStudioProjects/Booknote/app/src/main/res/layout/activity_main.xml" value="0.33" />
       </map>
     </option>
   </component>
