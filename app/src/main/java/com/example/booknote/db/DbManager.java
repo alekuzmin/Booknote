@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.booknote.adapter.Note;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,17 +33,19 @@ public class DbManager {
 
     }
 
-    public List<String> selectFromDb() {
-        List<String> tempList = new ArrayList<>();
+    @SuppressLint("Range")
+    public List<Note> selectFromDb() {
+        List<Note> noteList = new ArrayList<>();
         Cursor cursor = sqLiteDatabase.query(Constants.TABLE_NAME, null, null,
                 null, null, null, null);
         while (cursor.moveToNext()) {
-            @SuppressLint("Range")
-            String title = cursor.getString(cursor.getColumnIndex(Constants.TITLE));
-            tempList.add(title);
+            Note note = new Note();
+            note.setTitle(cursor.getString(cursor.getColumnIndex(Constants.TITLE)));
+            note.setDescription(cursor.getString(cursor.getColumnIndex(Constants.DESCRIPTION)));
+            noteList.add(note);
         }
         cursor.close();
-        return tempList;
+        return noteList;
     }
 
     public void closeDb() {

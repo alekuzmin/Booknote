@@ -2,6 +2,8 @@ package com.example.booknote.db;
 
 public class Constants {
     public static final String TABLE_NAME = "main_table";
+    public static final String NOTE_INTENT = "note_intent";
+    public static final String EDIT_STATE = "edit_state";
     public static final String _ID = "_id";
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";
