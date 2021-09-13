@@ -9,9 +9,8 @@
 
     <EditText
         android:id="@+id/edTitle"
-        android:layout_width="388dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:background="@android:drawable/editbox_background"
@@ -20,13 +19,13 @@
         android:inputType="textPersonName"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edDesc"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edDesc"
-        android:layout_width="392dp"
-        android:layout_height="616dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
