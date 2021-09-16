@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.booknote.adapter.Note;
+import com.example.booknote.db.AppExecuter;
 import com.example.booknote.db.Constants;
 import com.example.booknote.db.DbManager;
 
@@ -17,6 +18,7 @@ public class EditActivity extends AppCompatActivity {
     private EditText editTitle, editDescription;
     private DbManager dbManager;
     private boolean isEditState = true;
+    private Note note;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class EditActivity extends AppCompatActivity {
     private void getNoteIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            Note note = (Note) intent.getSerializableExtra(Constants.NOTE_INTENT);
+            note = (Note) intent.getSerializableExtra(Constants.NOTE_INTENT);
             isEditState = intent.getBooleanExtra(Constants.EDIT_STATE, true);
             if(!isEditState){
                 editTitle.setText(note.getTitle());
@@ -52,16 +54,25 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickSave(View view) {
-        String title = editTitle.getText().toString();
-        String description = editDescription.getText().toString();
+        final String title = editTitle.getText().toString();
+        final String description = editDescription.getText().toString();
 
         if (title.equals("") || description.equals("")) {
             Toast.makeText(this, R.string.text_epty_error, Toast.LENGTH_SHORT).show();
         } else {
-            dbManager.insertToDb(title, description);
-            Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-            finish();
+            if(isEditState) {
+                AppExecuter.getInstance().getSubIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        dbManager.insertToDb(title, description);
+                    }
+                });
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+            } else {
+                dbManager.updateDb(title, description, note.getId());
+            }
             dbManager.closeDb();
+            finish();
         }
 
     }

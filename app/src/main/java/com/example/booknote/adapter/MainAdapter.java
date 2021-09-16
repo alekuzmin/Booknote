@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.booknote.EditActivity;
 import com.example.booknote.R;
 import com.example.booknote.db.Constants;
+import com.example.booknote.db.DbManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             tvTitle = itemView.findViewById(R.id.tvTitle);
             itemView.setOnClickListener(this);
         }
-        public void setData(String title){
+
+        public void setData(String title) {
             tvTitle.setText(title);
 
         }
@@ -71,9 +73,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         }
     }
 
-    public void updateAdapter(List<Note> newNote){
+    public void updateAdapter(List<Note> newNote) {
         noteList.clear();
         noteList.addAll(newNote);
         notifyDataSetChanged();
+    }
+
+    public void removeItem(int position, DbManager dbManager) {
+        dbManager.deleteFromDb(noteList.get(position).getId());
+        noteList.remove(position);
+        notifyItemRangeChanged(0, noteList.size());
+        notifyItemRemoved(position);
     }
 }

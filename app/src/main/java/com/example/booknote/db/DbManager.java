@@ -33,19 +33,36 @@ public class DbManager {
 
     }
 
+    public void deleteFromDb (int id){
+        String selection = Constants._ID + "=" + id;
+        sqLiteDatabase.delete(Constants.TABLE_NAME, selection, null);
+
+    }
+
+    public void updateDb (String title, String description, int id){
+        String selection = Constants._ID + "=" + id;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constants.TITLE, title);
+        contentValues.put(Constants.DESCRIPTION, description);
+        sqLiteDatabase.update(Constants.TABLE_NAME, contentValues, selection, null);
+
+    }
+
     @SuppressLint("Range")
-    public List<Note> selectFromDb() {
+    public void selectFromDb(String title, OnDataReceived onDataReceived) {
         List<Note> noteList = new ArrayList<>();
-        Cursor cursor = sqLiteDatabase.query(Constants.TABLE_NAME, null, null,
-                null, null, null, null);
+        String selection = Constants.TITLE + " like ?";
+        Cursor cursor = sqLiteDatabase.query(Constants.TABLE_NAME, null, selection,
+                new String[]{"%" + title + "%"}, null, null, null);
         while (cursor.moveToNext()) {
             Note note = new Note();
             note.setTitle(cursor.getString(cursor.getColumnIndex(Constants.TITLE)));
             note.setDescription(cursor.getString(cursor.getColumnIndex(Constants.DESCRIPTION)));
+            note.setId(cursor.getInt(cursor.getColumnIndex(Constants._ID)));
             noteList.add(note);
         }
         cursor.close();
-        return noteList;
+        onDataReceived.onReceived(noteList);
     }
 
     public void closeDb() {
